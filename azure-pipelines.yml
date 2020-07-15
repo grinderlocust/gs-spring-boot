@@ -31,12 +31,13 @@ stages:
       displayName: 'Maven Package'
       inputs:
         mavenPomFile: 'app/pom.xml'
+        codeCoverageToolOption: Cobertura
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/target/*.?(war|jar)'
+        Contents: '**/*.jar'
         TargetFolder: $(Build.ArtifactStagingDirectory)
 
     - task: PublishPipelineArtifact@0
@@ -69,4 +70,4 @@ stages:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
               appName: $(webAppName)
-              package: '$(System.ArtifactsDirectory)/drop/**/target/*.?(war|jar)'
+              package: '$(System.ArtifactsDirectory)/drop/**/*.jar'
